@@ -4,7 +4,7 @@
 
 # Esta línea importa la función principal del menú desde el archivo MenuPrincipal.py
 # MenuPrincipal.py debe estar en la MISMA carpeta
-from MenuPrincipal import menu_principal
+from MenuPrincipal import loggin
 
 
 # Esta condición especial sirve para indicar que este archivo es el que se va a ejecutar
@@ -15,6 +15,7 @@ if __name__ == "__main__":
 
     # Aquí llamamos a la función principal del menú Esta función es la que muestra las opciones
     # al usuario (consultar saldo, ingresar dinero, etc.) A partir de aquí empieza todo el programa
-    menu_principal()
+    loggin()
 
     
+

@@ -1,69 +1,100 @@
+# loggin.py
+# Este archivo controla el registro y el inicio de sesión de los usuarios
+
+import random  # Para generar códigos de seguridad
+
+# 1. LISTAS PARA GUARDAR DATOS DE USUARIOS_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ __
+
 import random
 
-#Cada una de las funciones pide al usuario que ingrese el requisito en 3 intentos, cuando los 3 se cumplen se produce el loggin
-#Lo suyo es que los usuarios esten en una lista de librerias con los datos personales de cada uno para comparar bien
-#Cuando pasen los test correspondientes se puede proceder a la creación de un código en el main que llame a las funciones 
+usuarios = []
+contrasenas = []
+tipos_cuenta = []
 
-def nameclear(l):
+tipos_disponibles = ["joven", "jubilado", "empresa", "ong"]
 
-    i = 0
-    user = False
 
-    while i <= 3:
+def registrar_usuario():
 
-     nameok = input("Por favor ingrese su nombre de usuario: ")
-     
-     if nameok in l:
-            user = True
-        
-     else:
-           nameok = input ("nombre de usuario incorrecto, por favor ingrese su nombre de usuario: ")
-           i += 1
-     
-     return user
+    print("\nREGISTRO DE USUARIO")
+
+    usuario = input("Usuario: ")
+
+    if usuario in usuarios:
+
+        print("Este usuario ya existe.")
+
+        return
+
+    contrasena = input("Contraseña: ")
+
+    print("Tipos de cuenta:", tipos_disponibles)
+
+    tipo = input("Tipo de cuenta: ")
+
+    if tipo not in tipos_disponibles:
+
+        print("Tipo no válido.")
+
+        return
+
+    usuarios.append(usuario)
+
+    contrasenas.append(contrasena)
+
+    tipos_cuenta.append(tipo)
+
+    print("Usuario registrado correctamente.\n")
+
+
+def codigo_seguridad():
+
+    codigo = random.randint(1000, 9999)
+
+    print(f"Código enviado: {codigo}")
     
-def passclear(l): 
- i = 0
- password = False
+    entrada = input("Introduce el código: ")
 
- while i <= 3:
-
-     passok = input("Por favor ingrese su contraseña: ")
-     
-     if passok in l:
-            password = True
-        
-     else:
-           passok = input ("contraseña incorrecta, por favor ingrese su contraseña: ")
-           i += 1
-     
-     return password
-    
-def codeclear(l):
-  
-  i = 0
-  codesend = random.random(0000,9999)
-  codepass = False
-
-  while i <= 3:
-     print(f"*En su dispositivo recive el siguiente mensaje* su código de ingreso es {codesend}")
-     codeok = int(input("Por favor ingrese el código que ha recivido: "))
-     
-     if codeok == codesend:
-            codepass = True
-        
-     else:
-           codesend =random.random(0000,9999)
-           print(f"*En el Dispositivo* código incorrecto, aquí su nuevo código {codesend}")
-           codeok = int(input ("Por favor ingrese el nuevo código: "))
-           i += 1
-     
-     return codepass
-    
+    return entrada == str(codigo)
 
 
+def iniciar_sesion():
+    print("\nINICIO DE SESIÓN")
+    usuario = input("Usuario: ")
+    contrasena = input("Contraseña: ")
+
+    if usuario in usuarios:
+        i = usuarios.index(usuario)
+        if contrasenas[i] == contrasena:
+            if codigo_seguridad():
+                return True
+    print("Acceso denegado.")
+    return False
 
 
-if __name__ == "__main__":
+def loggin():
+    while True:
+        print("1. Registrarse")
+        print("2. Iniciar sesión")
+        print("0. Salir")
+
+        opcion = input("Elige una opción: ")
+
+        if opcion == "1":
+            registrar_usuario()
+
+        elif opcion == "2":
+            if iniciar_sesion():
+                print("\nAcceso permitido.\n")
+                from menu_principal import menu_principal
+                menu_principal()
+                break
+
+        elif opcion == "0":
+            print("Saliendo...")
+            break
+
+        else:
+            print("Opción no válida.")
 
      

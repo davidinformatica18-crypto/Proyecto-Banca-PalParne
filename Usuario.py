@@ -1,59 +1,94 @@
-# USUARIOS Y SISTEMA DE CUENTAS Y DIVIDENDOS
+# Usuario.py
+# Gestion de los datos del usuario dividendo al saldo
 
-import time   # para simular tiempo
-import math   # para los numeros entteros y decimales.
+import time   # simula el tiempo 
+import math   # libreria matematicas
 
-# 1. Diccionario con tipos de cuenta _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+# TIPOS DE CUENTA DISPONIBLES_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ __ _ _ _ _ _ _ _ _ _ _ _ _ _ __ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ __ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+# Diccionario que guarda los tipos de cuenta y el porcentaje del dividendo.
 
 tipos_de_cuenta = {
     
-    "joven": 0.02,       
-    "jubilado": 0.002,   
-    "empresa": 0.02,     
-    "ong": 0.002         
+    "joven": 0.002,
+    
+    "jubilado": 0.002,
+    
+    "empresa": 0.002,
+    
+    "ong": 0.002
 }
 
-# 2. Pedimos datos al usuario _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+# DATOS DEL USUARIO_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ __ _ _ _ _ _ _ _ _ _ _ _ _ _ __ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ __ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+# Pedimos el nombre del usuario.
 
 nombre = input("Escribe tu nombre: ")
 
-print("Tipos de cuenta disponibles: joven, jubilado, empresa, ong")
-tipo = input("Escribe tu tipo de cuenta: ")
+# Mostramos los tipos de cuenta.
 
-# 3. Saldo base de 100 €_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+print("Tipos de cuenta disponibles: joven, jubilado, empresa, ong")
+
+# Pedimos el tipo de cuenta.
+
+tipo = input("Eligue tu tipo de cuenta: ")
+
+# Si el tipo no existe, usamos uno por defecto.
+
+if tipo not in tipos_de_cuenta:
+    
+    print("Tipo de cuenta no válido. Se usará 'joven'.")
+    
+    tipo = "joven"
+
+# SALDO INICIAL_ _ _ _ _ _ _ _ _ _ _ _ _ _ __ _ _ _ _ _ _ _ _ _ _ _ _ _ __ _ _ _ _ _ _ _ _ _ _ _ _ _ __ _ _ _ _ _ _ _ _ _ _ _ _ _ __ _ _ _ _ _ _ _ _ _ _ _ _ _ __ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+# El saldo inicial siempre empieza en 100 euros
 
 saldo = 100.0
 
-print("Tu saldo es 100€.")
+print("Tu saldo inicial es de 100 €.")
 
-# 4. Dividendo fijo del 0.2%
+# DIVIDENDO_ _ _ _ _ _ _ _ _ _ _ _ _ _ __ _ _ _ _ _ _ _ _ _ _ _ _ _ __ _ _ _ _ _ _ _ _ _ _ _ _ _ __ _ _ _ _ _ _ _ _ _ _ _ _ _ __ _ _ _ _ _ _ _ _ _ _ _ _ _ __ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
-dividendo = 0.002
+# El dividendo según el tipo de cuenta.
+
+dividendo = tipos_de_cuenta[tipo]
 
 print("Cada 5 segundos se aplicará un dividendo del 0.2%.")
 
-# 5. Bucle que aplica dividendos sin preguntar meses _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+# APLICACIÓN DEL DIVIDENDO_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ __ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ __ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
-while True:
+# Este bucle se limita a 5 repeticiones para evitar un bucle infinito.
 
-    time.sleep(5)   # 5 segundos
+for i in range(5):
 
-    # cálculo del dividendo
+    # Esperamos 5 segundos
+    
+    time.sleep(5)
 
+    # Calculamos el incremento del saldo
+    
     incremento = saldo * dividendo
+
+    # Redondeamos el incremento a 2 decimales
+    
     incremento = round(incremento, 2)
 
-    # suma al saldo
+    # Sumamos el incremento al saldo
+    
+    saldo = saldo + incremento
 
-    saldo += incremento
-
-    # mostramos cambios
-
-    print("=== DIVIDENDO APLICADO ===")
+    # Mostramos la información por pantalla
+    
+    print("\n DIVIDENDO APLICADO 
+    
     print("Usuario:", nombre)
+          
     print("Tipo de cuenta:", tipo)
+          
     print("Dividendo recibido:", incremento, "€")
-    print("Saldo actualizado:", round(saldo, 2), "€")
+          
+    print("Saldo actualizado:", saldo, "€")
+          
     print("------------------------------")
-
-# _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
